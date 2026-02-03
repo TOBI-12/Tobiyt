@@ -31,10 +31,6 @@ let handler = async (m, { conn }) => {
 ┊❧️ .hard <enlace del grupo>
 ┊
 ┊
-┊🕹️ *Trabas remotas para Android* 🕹️
-┊
-┊❧️ .crash-system2
-┊
 ┊
 ┊💫 Comandos extras 💫
 ┊
