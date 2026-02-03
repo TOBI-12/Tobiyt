@@ -1,10 +1,10 @@
-# Bienvenido al repositorio OFC de Rembot 😸❤️
+# Bienvenido al repositorio OFC de Rembot by tobi 😸❤️
 
-Si gustas un bot para tu grupo puedes hablar con mi owner 🐢 
+Si gustas un bot para tu grupo puedes hablar con mi owner 😼🐢 
 
 ![Logo de Rembot](Grupo.jpg)
 
-Bot con más de 300 comandos 👑
+Bot crash para WhatsApp 
 
 # Redes oficiales del bot
 
@@ -36,11 +36,11 @@ Bot con más de 300 comandos 👑
 ## Instalación por Cloud Shell
 
 ```bash
-git clone https://github.com/TOBI-12/Rembot
+git clone https://github.com/TOBI-12/Tobiyt
 ```
 
 ```bash
-cd Rembot
+cd Tobiyt
 ```
 
 ```bash
