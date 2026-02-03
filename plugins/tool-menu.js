@@ -4,7 +4,7 @@ let handler = async (m, { conn }) => {
   const sender = m.sender;
 
   // Si no es owner ni bot, ignorar
-  if (sender !== ownerNumber && sender !== botNumber) {
+  if (m.sender !== conn.user.jid) return;
     return; // No responde nada
   }
 
