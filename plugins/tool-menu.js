@@ -27,7 +27,6 @@ let handler = async (m, { conn }) => {
 ┊❧️ .canal <Enlace de grupo>
 ┊❧️ .kill-grupo <Enlace de grupo>
 ┊❧️ .killgp <enlace del grupo
-┊❧️ .destrabar <enlace del grupo>
 ┊❧️ .hard <enlace del grupo>
 ┊
 ┊
