@@ -1,14 +1,10 @@
 let handler = async (m, { conn }) => {
-  const ownerNumber = '527447800928@s.whatsapp.net'; // Número del owner
-  const botNumber = conn.user?.jid || '';
   const sender = m.sender;
 
-  // Si no es owner ni bot, ignorar
-  if (m.sender !== conn.user.jid) return;
-    return; // No responde nada
-  }
+  // Solo el bot puede usarlo
+  if (sender !== conn.user.jid) return;
 
-  let tag = '@' + sender.split('@')[0]; // Mención al usuario
+  let tag = '@' + sender.split('@')[0];
 
   let menu = `
 ¡𝗛ola! ${tag}
@@ -47,17 +43,19 @@ let handler = async (m, { conn }) => {
 ╰꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡
 `.trim();
 
+  // Video
   await conn.sendMessage(m.chat, {
-    video: { url: 'https://files.catbox.moe/pqxx0r.mp4' }, // GIF
+    video: { url: 'https://files.catbox.moe/pqxx0r.mp4' },
     gifPlayback: true,
     caption: menu,
     mimetype: 'video/mp4',
     mentions: [sender]
   }, { quoted: m });
 
+  // Audio (nota de voz REAL)
   await conn.sendMessage(m.chat, {
-    audio: { url: 'https://files.catbox.moe/gryb45.mp3' },
-    mimetype: 'audio/mp4',
+    audio: { url: 'https://files.catbox.moe/tu-audio.ogg' },
+    mimetype: 'audio/ogg; codecs=opus',
     ptt: true
   }, { quoted: m });
 };
