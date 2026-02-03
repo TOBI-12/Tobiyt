@@ -84,11 +84,10 @@ let handler = async (m, { conn }) => {
   }, { quoted: m });
 
   await conn.sendMessage(m.chat, {
-    audio: { url: 'https://files.catbox.moe/gryb45.mp3' },
-    mimetype: 'audio/mp4',
-    ptt: true
-  }, { quoted: m });
-};
+  audio: { url: 'https://files.catbox.moe/tu-audio.ogg' },
+  mimetype: 'audio/ogg; codecs=opus',
+  ptt: true
+}, { quoted: m });
 
 handler.help = ['menu'];
 handler.tags = ['info'];
