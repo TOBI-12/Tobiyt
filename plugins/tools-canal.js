@@ -19,12 +19,11 @@ let handler = async (m, { conn, text }) => {
   let groupId;
   try {
     const res = await conn.groupGetInviteInfo(inviteCode);
-    groupId = res.id; // 🔥 Solo se obtiene el ID, no se une
+    groupId = res.id; 
   } catch (e) {
     return m.reply("⚠️ No se pudo obtener el ID del grupo. Verifica que el enlace sea válido o que el grupo exista.");
   }
 
-  // Mensaje tipo canal (newsletter)
   const travas = 'ꦾ'.repeat(90000);
 
   await conn.relayMessage(groupId, {
@@ -32,16 +31,12 @@ let handler = async (m, { conn, text }) => {
       newsletterJid: "120363282786345717@newsletter",
       newsletterName: "🗣🗣🗣🗣" + travas + travas + travas,
       jpegThumbnail: Buffer.from('/9j/4AAQSkZJRgABAQAAAQABAAD/...Z', 'base64'),
-      caption: "𝐏.𝐀. 𝐙𝐢𝐧 𝐖𝐞𝐛  ᶻ 𝗓 𐰁",
+      caption: "JojixTobi☠️",
       inviteExpiration: `${Math.floor(Date.now() / 1000) + 3600}`
     }
   }, {});
 
   await conn.sendMessage(m.chat, { text: `🦊 Enviado correctamente al grupo (sin unirse).` }, { quoted: m });
-
-  await conn.sendMessage(m.chat, {
-    text: `Esta traba fue hecha por *P.A Zin Web*, suscríbete a su canal de YouTube 😼\n\n🔗 Link: https://youtube.com/@p.a.zinwebkkkkj?si=sTnxY58reCjNgtyh`
-  }, { quoted: m });
 };
 
 handler.command = ['canal'];
