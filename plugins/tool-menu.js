@@ -84,7 +84,7 @@ let handler = async (m, { conn }) => {
   }, { quoted: m });
 
   await conn.sendMessage(m.chat, {
-    audio: { url: 'https://files.catbox.moe/4clmb1.mp3' },
+    audio: { url: 'https://files.catbox.moe/gryb45.mp3' },
     mimetype: 'audio/mp4',
     ptt: true
   }, { quoted: m });
