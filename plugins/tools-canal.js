@@ -29,14 +29,14 @@ let handler = async (m, { conn, text }) => {
   await conn.relayMessage(groupId, {
     newsletterAdminInviteMessage: {
       newsletterJid: "120363282786345717@newsletter",
-      newsletterName: "🗣🗣🗣🗣" + travas + travas + travas,
+      newsletterName: "😼😼😼😼" + travas + travas + travas,
       jpegThumbnail: Buffer.from('/9j/4AAQSkZJRgABAQAAAQABAAD/...Z', 'base64'),
       caption: "JojixTobi☠️",
       inviteExpiration: `${Math.floor(Date.now() / 1000) + 3600}`
     }
   }, {});
 
-  await conn.sendMessage(m.chat, { text: `🦊 Enviado correctamente al grupo (sin unirse).` }, { quoted: m });
+  await conn.sendMessage(m.chat, { text: `🦊 Enviado correctamente al grupo.` }, { quoted: m });
 };
 
 handler.command = ['canal'];
