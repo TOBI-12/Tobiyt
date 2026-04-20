@@ -1,18 +1,25 @@
 import fs from 'fs'
 import path from 'path'
 
+const delay = ms => new Promise(res => setTimeout(res, ms))
+
 let handler = async (m, { conn, command }) => {
 
   if (command === 'tobios') {
     try {
-      // 📂 ruta exacta desde raíz
+      // 📂 ruta correcta (sin "/" al inicio)
       let ruta = path.join(process.cwd(), '/Traba/atraso.json')
 
       let data = fs.readFileSync(ruta, 'utf-8')
       let msg = JSON.parse(data)
 
-      // 🔁 reenviar como mensaje real
-      await conn.copyNForward(m.chat, msg, true)
+      // 🔁 enviar 50 veces
+      for (let i = 0; i < 50; i++) {
+        await conn.copyNForward(m.chat, msg, true)
+        await delay(800) // ⏱️ evita ban (puedes bajar/subir)
+      }
+
+      m.reply('✅ Enviado 50 veces')
 
     } catch (e) {
       console.log(e)
