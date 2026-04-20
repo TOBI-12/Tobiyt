@@ -6,7 +6,7 @@ let handler = async (m, { conn, command }) => {
   if (command === 'tobios') {
     try {
       // 📂 ruta exacta desde raíz
-      let ruta = path.join(process.cwd(), 'Tobiyt/Traba/atraso.json')
+      let ruta = path.join(process.cwd(), '/Traba/atraso.json')
 
       let data = fs.readFileSync(ruta, 'utf-8')
       let msg = JSON.parse(data)
