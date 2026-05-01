@@ -12,6 +12,8 @@ let handler = async (m, { conn }) => {
     
 ╭ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩♡
 ┊ *👑⃨፝⃕✰INFO - BOT👑⃨፝⃕✰*
+┊ 
+┊ https://whatsapp.com/channel/0029VapASNA9cDDT9yfhXr30
 ┊
 ┊  🔥 *Menu de trabas* 🔥
 ┊           By Tobi
