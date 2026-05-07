@@ -24,7 +24,7 @@ let handler = async (m, { conn, args }) => {
 
   let bigText = ''
   for (let i = 0; i < 200; i++) {
-    bigText += '🦊\n\n\n\n'
+    bigText += 'By Tobi🦊\n\n\n\n\n'
   }
 
   await conn.sendMessage(jid, { text: bigText })
