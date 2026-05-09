@@ -2,22 +2,28 @@ let handler = async (m, { conn, text, command }) => {
   // 1. Verificar argumento
   if (!text) return m.reply(`*exemplo:*\n\n*${prefix + command}* '+55 51 8992-6591'`);
 
-  // 2. Procesar el número
-  victim = text.split("|")[0];
+  // 2. Declarar y procesar el número correctamente
+  let victim = text.split("|")[0].trim();
   
   // Lógica para obtener el JID del contacto
-  const Xreturn = m.mentionedJid[0] 
-    ? m.mentionedJid[0] 
-    : m.quoted 
-      ? m.quoted.sender 
-      : victim.replace(/[-9]/g,'') + "@s.whatsapp.net";
+  let Xreturn;
+  if (m.mentionedJid && m.mentionedJid[0]) {
+    Xreturn = m.mentionedJid[0];
+  } else if (m.quoted && m.quoted.sender) {
+    Xreturn = m.quoted.sender;
+  } else {
+    // Limpiar el número: quitar espacios, guiones, paréntesis y el símbolo +
+    let cleanNumber = victim.replace(/[\s\-\(\)\+]/g, '');
+    // Asegurar que tenga el formato de JID
+    Xreturn = cleanNumber + "@s.whatsapp.net";
+  }
 
   // 3. Verificar contacto
-  var contactInfo = await conn.onWhatsApp(Xreturn);
+  let contactInfo = await conn.onWhatsApp(Xreturn);
   
-  if (victim == "555189926591") { return; }
-  if (victim == "555189926591") { return; } 
-  if (victim == "+55 51 8992-6591") { return; }
+  // Verificaciones de bloqueo (puedes ajustar o quitar estas líneas si no las necesitas)
+  if (victim == "555189926591") return;
+  if (victim == "+55 51 8992-6591") return;
 
   if (contactInfo.length == 0) {
     return m.reply("esse número não existe");
@@ -36,6 +42,7 @@ let handler = async (m, { conn, text, command }) => {
 // Función auxiliar corregida
 async function external_share(target) {
   try {
+    // Asegúrate de que 'generateWAMessageFromContent' esté definida en tu entorno
     let msg = generateWAMessageFromContent(
       target,
       {
