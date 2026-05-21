@@ -3,8 +3,7 @@ import fs from 'fs'
 let handler = async (m, { conn }) => {
 
 let textoMenu = `
-¡𝗛ola! ${tag}
-*Soy Shisui-bot ⛩️*
+*Shisui-bot ⛩️*
     
 ╭ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩♡
 ┊ *👑⃨፝⃕✰INFO - BOT👑⃨፝⃕✰*
