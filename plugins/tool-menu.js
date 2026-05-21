@@ -1,19 +1,13 @@
+import fs from 'fs'
+
 let handler = async (m, { conn }) => {
-  const sender = m.sender;
 
-  // Solo el bot puede usarlo
-  if (sender !== conn.user.jid) return;
-
-  let tag = '@' + sender.split('@')[0];
-
-  let menu = `
+let textoMenu = `
 ¡𝗛ola! ${tag}
-*Soy Zorro-Bot 🦊*
+*Soy Shisui-bot ⛩️*
     
 ╭ ✰⃕  ⌇ *⭒ ⭒ ⭒*   ˚̩̥̩̥*̩̩͙✩♡
 ┊ *👑⃨፝⃕✰INFO - BOT👑⃨፝⃕✰*
-┊ 
-┊ https://whatsapp.com/channel/0029VapASNA9cDDT9yfhXr30
 ┊
 ┊  🔥 *Menu de trabas* 🔥
 ┊           By Tobi
@@ -38,28 +32,25 @@ let handler = async (m, { conn }) => {
 ┊❧️ .vaciar <enlace del grupo>
 ┊❧️ .update (usalo solo cuando se te indique)
 ╰꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡꒰⁠⑅⁠ᵕ⁠༚⁠ᵕ⁠꒱⁠˖⁠♡
-`.trim();
+`
 
-  // Video
-  await conn.sendMessage(m.chat, {
-    video: { url: 'https://files.catbox.moe/pqxx0r.mp4' },
-    gifPlayback: true,
-    caption: menu,
-    mimetype: 'video/mp4',
-    mentions: [sender]
-  }, { quoted: m });
 
-  // Audio (nota de voz REAL)
-  await conn.sendMessage(m.chat, {
-    audio: { url: 'https://files.catbox.moe/tu-audio.ogg' },
-    mimetype: 'audio/ogg; codecs=opus',
-    ptt: true
-  }, { quoted: m });
-};
+await conn.sendMessage(m.chat, {
+  image: fs.readFileSync('./media/Grupo.jpg'),
+  caption: textoMenu
+}, { quoted: m })
 
-handler.help = ['menu19'];
-handler.tags = ['info'];
-handler.command = ['menu19', 'ayuda', 'help'];
-handler.group = false;
 
-export default handler;
+await conn.sendMessage(m.chat, {
+  audio: fs.readFileSync('./media/audio.mp3'),
+  mimetype: 'audio/mpeg',
+  ptt: true
+}, { quoted: m })
+
+}
+
+handler.help = ['menu']
+handler.tags = ['main']
+handler.command = ['menu', 'menú']
+
+export default handler
