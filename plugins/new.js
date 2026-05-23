@@ -3,7 +3,7 @@ import fs from 'fs';
 const FILE_PATH = './mensajes_guardados.json';
 const CONFIG_PATH = './config_guardado.json';
 
-// Crear archivos si no existen
+// Crear archivos
 if (!fs.existsSync(FILE_PATH)) {
   fs.writeFileSync(FILE_PATH, JSON.stringify([], null, 2));
 }
@@ -12,52 +12,59 @@ if (!fs.existsSync(CONFIG_PATH)) {
   fs.writeFileSync(CONFIG_PATH, JSON.stringify({ auto: false }, null, 2));
 }
 
-// Cargar datos
-let mensajesGuardados = JSON.parse(fs.readFileSync(FILE_PATH));
+// Cargar
+const mensajesGuardados = JSON.parse(fs.readFileSync(FILE_PATH));
 let config = JSON.parse(fs.readFileSync(CONFIG_PATH));
 
-// Guardar funciones
-function saveMensajes() {
+// Guardar
+const saveMensajes = () => {
   fs.writeFileSync(FILE_PATH, JSON.stringify(mensajesGuardados, null, 2));
-}
+};
 
-function saveConfig() {
+const saveConfig = () => {
   fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
+};
+
+// 🔥 FUNCIÓN CLAVE (GUARDADO LIMPIO)
+function estructurarMensaje(msg) {
+  return {
+    key: msg.key,
+    message: msg.message
+  };
 }
 
 let handler = async (m, { conn, command, text }) => {
 
   switch (command) {
 
-    // 🔘 GUARDAR / AUTO ON-OFF
     case 'guardar':
 
       if (text === 'on') {
         config.auto = true;
         saveConfig();
-        return m.reply('🟢 Guardado automático ACTIVADO');
+        return m.reply('🟢 Auto guardado ON');
       }
 
       if (text === 'off') {
         config.auto = false;
         saveConfig();
-        return m.reply('🔴 Guardado automático DESACTIVADO');
+        return m.reply('🔴 Auto guardado OFF');
       }
 
-      if (!m.quoted) return m.reply('❌ Responde al mensaje que quieres guardar');
+      if (!m.quoted) return m.reply('❌ Responde a un mensaje');
 
-      let msg = m.quoted.fakeObj || m.quoted;
+      let msg = m.quoted;
+      let limpio = estructurarMensaje(msg);
 
-      mensajesGuardados.push(msg);
+      mensajesGuardados.push(limpio);
       saveMensajes();
 
-      return m.reply('✅ Mensaje guardado');
+      return m.reply('✅ Mensaje guardado correctamente');
 
-    // 🔁 REENVIAR TODOS
     case 'reenviar':
 
       if (mensajesGuardados.length === 0)
-        return m.reply('❌ No hay mensajes guardados');
+        return m.reply('❌ No hay mensajes');
 
       for (let msg of mensajesGuardados) {
         try {
@@ -69,32 +76,20 @@ let handler = async (m, { conn, command, text }) => {
 
       break;
 
-    // 🗑️ ELIMINAR TODO
     case 'eliminarmsg':
 
-      mensajesGuardados = [];
+      mensajesGuardados.length = 0;
       saveMensajes();
 
-      return m.reply('🗑️ Mensajes eliminados');
+      return m.reply('⛩️ Todo eliminado');
 
-    // 📥 DESCARGAR JSON
     case 'descargarmsg':
 
-      try {
-        if (!fs.existsSync(FILE_PATH)) {
-          fs.writeFileSync(FILE_PATH, JSON.stringify([], null, 2));
-        }
-
-        await conn.sendMessage(m.chat, {
-          document: fs.readFileSync(FILE_PATH),
-          fileName: 'mensajes_guardados.json',
-          mimetype: 'application/json'
-        }, { quoted: m });
-
-      } catch (e) {
-        console.error(e);
-        m.reply('❌ Error al enviar el archivo');
-      }
+      await conn.sendMessage(m.chat, {
+        document: Buffer.from(JSON.stringify(mensajesGuardados, null, 2)),
+        fileName: 'mensajes_guardados.json',
+        mimetype: 'application/json'
+      }, { quoted: m });
 
       break;
   }
@@ -104,15 +99,16 @@ handler.command = ['guardar', 'reenviar', 'eliminarmsg', 'descargarmsg'];
 export default handler;
 
 
-// ⚡ AUTO GUARDADO GLOBAL
+// ⚡ AUTO GUARDADO
 export async function before(m) {
   if (!config.auto) return;
 
   try {
-    let msg = m.fakeObj || m;
-    mensajesGuardados.push(msg);
+    let limpio = estructurarMensaje(m);
+
+    mensajesGuardados.push(limpio);
     saveMensajes();
   } catch (e) {
     console.error(e);
   }
-            }
+  }
