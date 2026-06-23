@@ -32,7 +32,7 @@
   },
   "license": "MIT-License",
   "dependencies": {
-    "@whiskeysockets/baileys": "npm:@alzx7z/baileys",
+    "@itsliaaa/baileys": "latest",
     "awesome-phonenumber": "^3.4.0",
     "ruhend-scraper": "^7.0.4",
     "gradient-string": "^2.0.2",
